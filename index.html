@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>ES 2016|2017|2018</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/bekk/remark/master/dist/bekk.css">
+    <link rel="stylesheet" href="slides.css">
+  </head>
+  <body class="bekk-black">
+    <textarea id="source">
+
+class: front-page
+  # ES2016|2017|2018
+  ## På litt over fem minutter
+???
+
+Forhåpentligvis fått opp første nettside, repeterer litt fra gitbook.
+---
+class: center middle
+# ES 2016
+
+---
+# ES 2016
+## Exponential operator
+```js
+2**4
+> 16
+```
+---
+# ES 2016
+## Array.prototype.includes
+
+```js
+
+let arr = ["a","b","c"]
+console.log(arr.includes("a")) // true
+
+```
+???
+```js
+if (arr.indexOf(el) !== -1) {
+  ...
+}
+```
+
+---
+class: center middle
+# ES2017
+
+???
+4 features som gjør livene våre enklere
+2 større features
+
+---
+# ES2017
+
+## Object.values og Object.entries
+
+```js
+const obj = {
+  a: 3,
+  b: 5,
+}
+
+Object.values(obj)
+> [3, 4]
+
+Object.entries(obj)
+> [["a", 3], ["b", 5]]
+```
+
+???
+Funksjoner som ville være nyttige operasjoner som ble gjort ofte. Og funksjonalitet var implementert i mange bibliotek.
+
+For å kunne iterere over verdiene i et objekt
+
+
+---
+#ES 2017
+## Object.getOwnPropertyDescriptors()
+```js
+const obj = {a: 2, b: "thing"};
+
+Object.getOwnPropertyDescriptors(obj);
+> {
+  a: {
+    value: 2, 
+    writable: true, 
+    enumerable: true, 
+    configurable: true
+  },
+  b: {
+    value: "thing", 
+    writable: true, 
+    enumerable: true, 
+    configurable: true
+  }}
+
+```
+???
+For å gjøre det enklere å kopiere et objekt og få med alle propertydescriptorene.
+https://github.com/tc39/proposal-object-getownpropertydescriptors
+
+---
+#ES 2017
+## getOwnPropertyDescriptors
+
+```js
+const clone1 = Object.defineProperties({},
+    Object.getOwnPropertyDescriptors(obj));
+```
+---
+# ES2017
+## padStart og padEnd
+
+```js
+'?'.padStart(5,'.');
+>'....?'
+
+
+
+'Hi'.padEnd(5, '.');
+> 'Hi...'
+
+```
+???
+Fra leftpad gate
+
+---
+# ES 2017
+## Trailing commas in function parameter lists and calls
+
+```js
+function doCoolThings(
+  param1,
+  param2,
+) { /*... */ }
+
+doCoolThings(
+  param1,
+  param2,
+)
+```
+---
+# ES 2017
+## Trailing commas in function parameter lists and calls
+```js
+function doCoolThings(
+  param1,
+  param2,
+  param3,
+) { /*... */ }
+
+doCoolThings(
+  param1,
+  param2,
+  param3,
+)
+```
+
+???
+https://github.com/tc39/proposal-trailing-function-commas
+
+Dersom en har en liste med parametre, så trenger man bare å legge inn en ekstra linje. Ser sweet ut i versjonskontrolls
+
+
+---
+# ES 2017
+## Async functions
+```js
+const getPokemon(number) {
+  /* Returnerer et Promise som gir navnet til en pokemon  */
+}
+
+async function asyncGetPokemon() {
+  console.log('Getting pokemon');
+  let pokemon = await getPokemon(25);
+  console.log(pokemon); // "Pikachu"
+}
+
+asyncGetPokemon();
+```
+
+
+???
+Ble ikke en del av speccen før januar 2017
+
+Ideen er å skrive asynkron kode som ser ut som synkron kode
+
+---
+# ES 2017
+
+## Shared memory and atomics
+- Shared memrory: Funksjonalitet for å dele minne mellom Web Workers.
+- Atomics: Unngå race conditions når en deler minne.
+
+"A crash course in memory management" - Lin Clark
+
+???
+https://hacks.mozilla.org/2017/06/a-crash-course-in-memory-management/ 
+
+Lin Clark
+
+Myntet på utviklere som jobber på biblioteker og lavnivå APIer.
+Deling av minne mellom webworkers og atmiske operasjoner som skal 
+hjelpe på å unngå race conditions.
+
+---
+class: center middle
+# ES 2018
+
+---
+# ES 2018
+## Rest and Spread properties
+```js
+const obj = {a: 1, b: 2, c: 3}; 
+const {a, ...rest} = obj;
+
+console.log(a === 1); // true
+console.log(rest); // {b: 2, c: 3}
+
+const obj2 = {a, ...rest};
+console.log(obj2); // {a: 1, b: 2, c: 3}
+```
+---
+
+# ES 2018
+## Revisjon i template literaler
+
+```js
+// Gyldig unicode escape sequence
+const unicode = `\u{42}` 
+
+// Tidligere ugyldig unicode escape sequence
+const unicodeInLatex = `\unicode`;
+
+```
+???
+http://2ality.com/2016/09/template-literal-revision.html
+
+---
+
+# ES 2018
+## Regular Expressions - Named capture groups
+
+```js
+let re = /^([0-9]+)\s([A-Z]+)/
+let result = = re.exec("1000 NOK")
+
+const saldo = result[1];
+const valutta = result[2];
+```
+---
+
+# ES 2018
+## Regular Expressions - Named capture groups
+
+```js
+let re = /^([0-9]+)\s([A-Z]+)/
+let result = = re.exec("1000 NOK")
+
+const saldo = result[1];
+const valutta = result[2];
+```
+```js
+let re = /^(?<saldo>[0-9]+)\s(?<valutta>[A-Z]+)/
+let result = = re.exec("1000 NOK")
+
+const saldo = result.groups.saldo // "1000"
+const valutta = result.groups.valutta // "NOK"
+```
+
+???
+For å bedre kodekvalitet og vedlikeholdbarhet
+
+---
+# Regular Expressions - Unicode Property escapes
+```js
+const regexGreekSymbol = /\p{Script=Greek}/u;
+regexGreekSymbol.test('π');
+// → true
+```
+
+---
+# ES 2018
+## RegEx - Lookbehid assertions
+
+???
+https://github.com/tc39/proposal-regexp-lookbehind
+
+---
+# ES 2018
+## RegEx - s (dotAll) flag
+
+```js
+/foo.bar/.test('foo\nbar'); 
+// → false
+
+/foo.bar/s.test('foo\nbar'); 
+// → true
+```
+
+
+---
+# ES 2018
+## Asynchronous Iteration
+
+```js
+// Sync iterator
+const { value, done } = syncIterator.next();
+
+// Async iterator
+asyncIterator.next().then(({ value, done }) => /* ... */);
+
+```
+
+```js
+for await (const line of readLines(filePath)) {
+  console.log(line);
+}
+```
+???
+https://github.com/tc39/proposal-async-iteration
+
+---
+# ES 2018
+## Promise.prototype.finally
+```js
+let isFetching = true;
+
+fetch(myRequest).then(function(response) {
+    /* Process response and return JSON, or throw error */
+  })
+  .then(function(json) { /* process your JSON further */ })
+  .catch(function(error) { console.log(error); })
+  .finally(function() { isFetching = false; });
+```
+Source: MDN
+---
+
+
+    </textarea>
+    <script src="https://cdn.rawgit.com/bekk/remark/master/vendor/remark.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        ratio: '16:9',
+        highlightLanguage: 'javascript',
+        highlightStyle: 'monokai',
+        navigation: {
+          scroll: false
+        }
+      });
+
+    </script>
+
+  </body>
+</html>
