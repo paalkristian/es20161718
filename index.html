@@ -193,7 +193,7 @@ Ideen er å skrive asynkron kode som ser ut som synkron kode
 # ES 2017
 
 ## Shared memory and atomics
-- Shared memrory: Funksjonalitet for å dele minne mellom Web Workers.
+- Shared memory: Funksjonalitet for å dele minne mellom Web Workers.
 - Atomics: Unngå race conditions når en deler minne.
 
 "A crash course in memory management" - Lin Clark
@@ -247,7 +247,7 @@ http://2ality.com/2016/09/template-literal-revision.html
 
 ```js
 let re = /^([0-9]+)\s([A-Z]+)/
-let result = = re.exec("1000 NOK")
+let result = re.exec("1000 NOK")
 
 const saldo = result[1];
 const valutta = result[2];
@@ -259,14 +259,14 @@ const valutta = result[2];
 
 ```js
 let re = /^([0-9]+)\s([A-Z]+)/
-let result = = re.exec("1000 NOK")
+let result = re.exec("1000 NOK")
 
 const saldo = result[1];
 const valutta = result[2];
 ```
 ```js
 let re = /^(?<saldo>[0-9]+)\s(?<valutta>[A-Z]+)/
-let result = = re.exec("1000 NOK")
+let result = re.exec("1000 NOK")
 
 const saldo = result.groups.saldo // "1000"
 const valutta = result.groups.valutta // "NOK"
@@ -349,7 +349,7 @@ fetch(myRequest).then(function(response) {
   .catch(function(error) { console.log(error); })
   .finally(function() { isFetching = false; });
 ```
-Source: MDN
+
 ---
 
 
